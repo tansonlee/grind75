@@ -1,0 +1,86 @@
+'''
+Solution 1:
+let n = number of nodes
+Time complexity: O(n)
+Space complexity: O(n)
+'''
+def hasCycle(self, head: Optional[ListNode]) -> bool:
+    visited = set()
+    
+    curr = head
+    while curr != None:
+        if curr in visited:
+    	return True
+        visited.add(curr)
+        curr = curr.next
+    
+    return False
+
+
+'''
+Solution 2:
+Time complexity: O(n)
+Space complexity: O(1)
+Flaws: There needs to be a `unique_val`; a value that is not the value of any node. It also destroys the list.
+'''
+def hasCycle(self, head: Optional[ListNode]) -> bool:
+        unique_val = 'hello'
+            
+        curr = head
+        while curr is not None:
+            if curr.val == unique_val:
+                return True
+            curr.val = unique_val
+            curr = curr.next
+        
+        return False
+
+
+
+
+'''
+Solution 3:
+Time complexity: O(n)
+Space complexity: O(1)
+Flaws: Destroys the list.
+'''
+def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if head is None:
+            return False
+        
+        first = head
+        prev = head
+        curr = head.next
+        while curr is not None:
+            if curr == first:
+                return True
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+            
+        return False
+
+
+'''
+Solution 3:
+Time complexity: O(n)
+Space complexity: O(1)
+'''
+def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if head is None:
+            return False
+        slow = head
+        fast = head.next
+        
+        while slow is not None and fast is not None:
+            if slow == fast:
+                return True
+            slow = slow.next
+            if fast.next is None:
+                return False
+            fast = fast.next.next
+        
+        return False
+
+
