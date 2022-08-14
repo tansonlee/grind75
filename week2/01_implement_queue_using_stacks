@@ -1,0 +1,81 @@
+'''
+Solution 1:
+Time complexity:
+* init: O(1)
+* push: O(n)
+* pop: O(1)
+* peek: O(1)
+'''
+class MyQueue:
+    def __init__(self):
+        self.stack1 = deque()
+        self.stack2 = deque()
+        self.size = 0
+
+    def push(self, x: int) -> None:
+        for i in range(self.size):
+            e = self.stack1.pop()
+            self.stack2.append(e)
+        
+        self.stack1.append(x)
+        for i in range(self.size):
+            e = self.stack2.pop()
+            self.stack1.append(e)
+        self.size += 1
+
+    def pop(self) -> int:
+        self.size -= 1
+        return self.stack1.pop()
+        
+    def peek(self) -> int:
+        return self.stack1[-1]
+
+    def empty(self) -> bool:
+        return self.size == 0
+
+'''
+Solution 2:
+Time complexity:
+* init: O(1)
+push, pop, peak are all O(1) if it is the second time in a row calling
+this function. Otherwise, it is O(n).
+'''
+class MyQueue:
+    def __init__(self):
+        self.stack1 = deque()
+        self.stack2 = deque()
+        self.size = 0
+    
+    def fill_stack1(self):
+        for i in range(self.size):
+            e = self.stack2.pop()
+            self.stack1.append(e)
+    
+    def fill_stack2(self):
+        for i in range(self.size):
+            e = self.stack1.pop()
+            self.stack2.append(e)
+
+    def push(self, x: int) -> None:
+        if len(self.stack2) > 0:
+            self.fill_stack1()
+        self.stack1.append(x)
+        self.size += 1
+
+    def pop(self) -> int:
+        if len(self.stack1) > 0:
+            self.fill_stack2()
+        
+        self.size -= 1
+        return self.stack2.pop()
+        
+    def peek(self) -> int:
+        if len(self.stack1) > 0:
+            self.fill_stack2()
+        
+        return self.stack2[-1]
+
+    def empty(self) -> bool:
+        return self.size == 0
+
+
