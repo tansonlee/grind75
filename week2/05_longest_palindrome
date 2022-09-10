@@ -1,0 +1,19 @@
+def longestPalindrome(self, s: str) -> int:
+        d = {}
+        for char in s:
+            if char in d:
+                d[char] += 1
+            else:
+                d[char] = 1
+        
+        result = 0
+        has_remaining = False
+        for key in d:
+            pairs = d[key] // 2
+            result += pairs * 2
+            d[key] -= pairs * 2
+            if d[key] % 2 == 1:
+                has_remaining = True
+
+        return result + 1 if has_remaining else result
+
