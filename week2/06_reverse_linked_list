@@ -1,0 +1,39 @@
+'''
+Iterative
+'''
+def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None:
+            return None
+
+        prev = None
+        curr = head
+        
+        while curr is not None:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        
+        return prev
+
+
+'''
+Recursive
+'''
+def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        def helper(lst, point_to):
+            if lst is None:
+                return None
+            
+            if lst.next is None:
+                lst.next = point_to
+                return lst
+            
+            nxt = lst.next
+            lst.next = point_to
+            return helper(nxt, lst)
+        
+        return helper(head, None)
+
+
